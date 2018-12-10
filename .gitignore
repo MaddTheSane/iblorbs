@@ -1,0 +1,13 @@
+*.o
+
+bdiff
+blc
+bmerge
+bpal
+bres
+front
+
+front.c
+bres.c
+
+.DS_Store
