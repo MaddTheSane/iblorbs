@@ -38,9 +38,9 @@ static void *my_malloc(int size)
 // Maximum number of chunks we'll allow
 #define MAX_BLORB 1024
 // The program name.  DJGPP munges this, so we rebuild it here
-char *MyName;
+static char *MyName;
 // The current line in the blc control file
-int Line=0;
+static int Line=0;
 
 /* The blorb chunk types. In addition to the chunk data, it holds the index
  * information if needed

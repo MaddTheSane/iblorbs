@@ -1,7 +1,8 @@
 CC := gcc
 LEX := flex
 LEX_LIB := -lfl
-CC_FLAGS :=
+CFLAGS :=
+LDFLAGS :=
 FRONT = front
 BRES = bres
 BLC = blc
@@ -31,26 +32,26 @@ veryclean: clean
 	-rm $(BPAL)
 	-rm $(BMERGE)
 $(BPAL): bpal.o bpalcmd.o short.o
-	$(CC) $(CC_FLAGS) $^ $(LEX_LIB) -o $@
+	$(CC) $(CFLAGS) $(LDFLAGS) $^ $(LEX_LIB) -o $@
 $(FRONT): front.o
-	$(CC) $(CC_FLAGS) $< $(LEX_LIB) -o $@
+	$(CC) $(CFLAGS) $(LDFLAGS) $< $(LEX_LIB) -o $@
 $(BRES): bres.o short.o
-	$(CC) $(CC_FLAGS) $^ $(LEX_LIB) -o $@
+	$(CC) $(CFLAGS) $(LDFLAGS) $^ $(LEX_LIB) -o $@
 $(BLC): blc.o short.o
-	$(CC) $(CC_FLAGS) $^ -o $@
+	$(CC) $(CFLAGS) $(LDFLAGS) $^ -o $@
 $(BMERGE): bmerge.o short.o index.o
-	$(CC) $(CC_FLAGS) $^ -o $@
+	$(CC) $(CFLAGS) $(LDFLAGS) $^ -o $@
 $(BDIFF): bdiff.o short.o index.o
-	$(CC) $(CC_FLAGS) $^ -o $@
+	$(CC) $(CFLAGS) $(LDFLAGS) $^ -o $@
 
 front.o: front.c
-	$(CC) $(CC_FLAGS) -c $^ -o $@
+	$(CC) $(CFLAGS) -c $^ -o $@
 bres.o: bres.c short.h
-	$(CC) $(CC_FLAGS) -c $< -o $@
+	$(CC) $(CFLAGS) -c $< -o $@
 blc.o: blc.c
-	$(CC) $(CC_FLAGS) -c $^ -o $@
+	$(CC) $(CFLAGS) -c $^ -o $@
 short.o: short.c short.h
-	$(CC) $(CC_FLAGS) -c $< -o $@
+	$(CC) $(CFLAGS) -c $< -o $@
 bdiff.o: bdiff.c short.h index.h
 bmerge.o: bmerge.c short.h index.h
 bpalcmd.o: bpalcmd.c bpal.h short.h
