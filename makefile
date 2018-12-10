@@ -1,7 +1,7 @@
-CC = gcc
-LEX = flex
-LEX_LIB = -lfl
-CC_FLAGS =
+CC := gcc
+LEX := flex
+LEX_LIB := -lfl
+CC_FLAGS :=
 FRONT = front
 BRES = bres
 BLC = blc
@@ -21,7 +21,6 @@ clean:
 	-rm short.o
 	-rm front.c
 	-rm bres.c
-	-rm bpalcmd.c
 	-rm bpal.o
 	-rm bpalcmd.o
 veryclean: clean
