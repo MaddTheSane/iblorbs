@@ -437,9 +437,9 @@ char *yytext;
 Starting command interpreter...\ntype 'h' for command summary\n\n"
 static char *MyName;
 palette *working_palette;
-int verbose=1;
-int message(const char *f, ...);
-char *Help="\
+static int verbose=1;
+static int message(const char *f, ...);
+static const char *Help="\
 Command Summary:\n\
  l <file>     load a bpal palette file\n\
  i <file>     import palette from a PNG file\n\

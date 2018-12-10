@@ -6,6 +6,7 @@
  */
 #include <string.h>
 #include <stdlib.h>
+#include "short.h"
 char *ShortProgramName(char *argv)
 {
   char *MyName;

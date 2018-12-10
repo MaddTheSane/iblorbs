@@ -58,8 +58,8 @@ int ChType[] = { -1, -1, -1, 0, 0, 0, 1, 2, 2, 0, 0 };
 int ResNum[] = { 3, 3, 0, 0, 0, 0, 0, 0, 0, 0 };
 char *StrN[] = { "0", "1", "2" };
 // Function Prototypes
-char *GuessForm(char *File, int type);
-void CreateEntry(int type, char *Ident, char *Text);
+static char *GuessForm(char *File, int type);
+static void CreateEntry(int type, char *Ident, char *Text);
 
 // The Blorb names of recognized chunks, in the order given above.
 char *BlbName[] = { "Pict", "Snd", "Exec", "(c)", "AUTH", "ANNO", "RelN",

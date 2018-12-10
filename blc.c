@@ -8,7 +8,7 @@
 #include <stdlib.h>
 #include "short.h"
 #define BUF_SIZE 4096
-void *my_realloc(void *buf, size_t size)
+static void *my_realloc(void *buf, size_t size)
 {
  buf=realloc(buf,size);
  if (!buf)
@@ -19,7 +19,7 @@ void *my_realloc(void *buf, size_t size)
    return buf;
 }
 
-void *my_malloc(int size)
+static void *my_malloc(int size)
 {
  void *buf=malloc(size);
  if (!buf)
@@ -53,7 +53,7 @@ struct Chunk {
         char *Data;
         };
 
-void write_int(FILE *f, unsigned int v)
+static void write_int(FILE *f, unsigned int v)
 // Write_int writes an integer to a file in blorb format 
 {
   unsigned char v1=v&0xFF,
@@ -67,7 +67,7 @@ void write_int(FILE *f, unsigned int v)
   fwrite(&v1,1,1,f);
 }
 
-void str_long(char *f, unsigned int v)
+static void str_long(char *f, unsigned int v)
 /* str_long writes a long to a string, in a format suitable to later
  * using with write_id
  */
@@ -82,7 +82,7 @@ void str_long(char *f, unsigned int v)
   f[2]=v2;
   f[3]=v1;
 }
-void str_short(char *f, unsigned int v)
+static void str_short(char *f, unsigned int v)
 /* str_long writes a long to a string, in a format suitable to later
  * using with write_id
  */
@@ -94,7 +94,7 @@ void str_short(char *f, unsigned int v)
   f[1]=v1;
 }
 
-void write_id(FILE *f, unsigned char *s)
+static void write_id(FILE *f, unsigned char *s)
 /* write_id writes a string to a file as a blorb ID string (4 bytes, space
  * padded)
  */
@@ -108,7 +108,7 @@ void write_id(FILE *f, unsigned char *s)
     fwrite(&sp, 1,1,f);
 }
 
-void str_id(char *f, unsigned char *s)
+static void str_id(char *f, unsigned char *s)
 // str_id writes a blorb identifier to a string
 {
   int i;
@@ -122,7 +122,7 @@ void str_id(char *f, unsigned char *s)
 
 
 
-struct Chunk *ReadChunk(FILE *f)
+static struct Chunk *ReadChunk(FILE *f)
 // ReadChunk reads one entry from a blc control file and loads a chunk from it
 {
  // Malloc ourselves a new chunk
@@ -195,15 +195,15 @@ struct Chunk *ReadChunk(FILE *f)
 }
 
 // Array of all chunks
-struct Chunk *Blorb[MAX_BLORB];
+static struct Chunk *Blorb[MAX_BLORB];
 // Number of chunks in this file
-int Chunks=1;
+static int Chunks=1;
 // Number of chunks we need to index
-int IndexEntries=0;
+static int IndexEntries=0;
 // Offsets of index entries
-unsigned long int *Index;
+static unsigned long int *Index;
 
-void BuildIndex(FILE *f)
+static void BuildIndex(FILE *f)
 // BuildIndex builds the index chunk for a blorb file, loading all other chunks
 {
  int i,n=0; char *dp;
@@ -242,7 +242,7 @@ void BuildIndex(FILE *f)
   }
 }
 
-void Write_Chunk(FILE *Out,struct Chunk *C)
+static void Write_Chunk(FILE *Out,struct Chunk *C)
 // Write_Chunk writes one chunk to a file
 {
 int z=0;
@@ -258,7 +258,7 @@ if (strcmp(C->Type,"FORM")){
  if (C->Length%2) fwrite(&z,1,1,Out);
 }
 
-void WriteBlorb(FILE *F,FILE *Out)
+static void WriteBlorb(FILE *F,FILE *Out)
 // WriteBlorb generates a blorb from a BLC file
 {
  int n=0,i;
