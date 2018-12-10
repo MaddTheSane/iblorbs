@@ -117,7 +117,7 @@ iblorbs.zip contains source code for this system
   Include directions to use a 16-bit palette
 * TRUECOLOR
   include directions to use a 32-bit palette
-  You can also put comments in the file by startign a line with
+* You can also put comments in the file by startign a line with
   an exclamation point (`!`)
 
 This is a sample of a resource file:
