@@ -8,7 +8,7 @@
 
 #include <stdio.h>
 #include <string.h>
-#include <dos.h>
+#include <time.h>
 #include "short.h"   // For ShortProgramName
 /* The version and boilerplate messages.  The string is formatted
  * with the assumption  that it will be printed with the program name,
@@ -51,9 +51,9 @@ int type=0;
 // Buffer for inform identifier
 char Ident_Buffer[128];
 /* Number to be associated with a resource.  I start pictures and sounds at
-/* 3 to ensure that they map to reachable z-machine resources (Sounds 1 and 2
-/* in inform are considered to be "beeps")
-*/
+ * 3 to ensure that they map to reachable z-machine resources (Sounds 1 and 2
+ * in inform are considered to be "beeps")
+ */
 int ChType[] = { -1, -1, -1, 0, 0, 0, 1, 2, 2, 0, 0 };
 int ResNum[] = { 3, 3, 0, 0, 0, 0, 0, 0, 0, 0 };
 char *StrN[] = { "0", "1", "2" };
@@ -112,33 +112,33 @@ char *Ext2Form[] = { "jpg",   "JPEG",
 
 void CreateEntry(int type, char *Ident, char *Text)
 /* CreateEntry writes the BLC control file and Inform source file based on
-/* the lexer's input:
-/*  type: The type of the chunk, as defined above
-/*  Ident: The inform identifier (unsused for non-resources)
-/*  Text: The actual text of the BLC entry
-/*        (For resources, this is a filename.  For other resoruces, this is
-/*         the literal text of the chunk
-*/
+ * the lexer's input:
+ *  type: The type of the chunk, as defined above
+ *  Ident: The inform identifier (unsused for non-resources)
+ *  Text: The actual text of the BLC entry
+ *        (For resources, this is a filename.  For other resoruces, this is
+ *         the literal text of the chunk
+ */
 {
   char *Form; char *Res;
   /* Pict, Sound, and Exec are "resource types", so we need to know
-  /* both a file type and a usage.  We use the value in the type table
-  /* for the usage, and try to determine the file type from the extension.
-  */
+   * both a file type and a usage.  We use the value in the type table
+   * for the usage, and try to determine the file type from the extension.
+   */
   if (ChType[type]==-1) {
         Form=GuessForm(Text,type);
         Res=BlbName[type];
         // Write the constant declaration to the Inform source file.
         if (type!=exec) /* Exec is a special case; it's a resource with no
-                        /* associated Inform name
-                        */
+                         * associated Inform name
+                         */
         fprintf(InfFile,"Constant %s %d;\t!Blorb %s:%s\n",
                 Ident,ResNum[type],BlbName[type],Text);
         }
   /* For non-resource types, the type is stored in the BlbName table,
-  /* and we use "0" as the resource usage (This will flag to BLC that
-  /* the chunk is not a resource, and needs not be indexed with them)
-  */
+   * and we use "0" as the resource usage (This will flag to BLC that
+   * the chunk is not a resource, and needs not be indexed with them)
+   */
   else { Form=BlbName[type];
          Res=StrN[ChType[type]];
        }
@@ -150,22 +150,22 @@ void CreateEntry(int type, char *Ident, char *Text)
                  Text
          );
   /* Bump up the resource number. This is not really important for
-  /* non-resources, but it does ensure that each blorb chunk will
-  /* have a unique identifier in the BLC control file.
-  */
+   * non-resources, but it does ensure that each blorb chunk will
+   * have a unique identifier in the BLC control file.
+   */
   ResNum[type]++;
 }
 
 char *GuessForm(char *File, int type)
 /* GuessForm tries to guess a chunk type based on the name of the file
-/*  File: The file name
-/*  type: The resource type of the file
-/* Returns: the literal blorb chunk type of the file.
-*/
+ *  File: The file name
+ *  type: The resource type of the file
+ * Returns: the literal blorb chunk type of the file.
+ */
 {
  /* Isolate the extension as the part of the strign following the last
- /* full stop.
- */
+  * full stop.
+  */
  char *Ext=strrchr(File,'.');
  static char *Form;
  Form=NULL;
@@ -178,8 +178,8 @@ char *GuessForm(char *File, int type)
   for(i=0;i<KNOWN_EXT*2;i+=2)
    if (strncmp(Ext2Form[i],Ext,strlen(Ext2Form[i]))==0) break;
   /* This is, "if there was a match, the form type is the corresponding
-  /* entry in the table."
-  */
+   * entry in the table."
+   */
   if (i<KNOWN_EXT*2)
    Form=Ext2Form[i+1];
  }
@@ -198,12 +198,12 @@ char *GuessForm(char *File, int type)
 }
 
 
-main(int argc, char **argv)
+int main(int argc, char **argv)
 {
   char BlurbName[128];
   char InfName[128];
   char InName[128];
-  struct date date;
+  struct tm date;
   char *nameroot;
   // Strip off the path and .exe for DJGPP builds
   MyName=ShortProgramName(argv[0]);
@@ -212,10 +212,10 @@ main(int argc, char **argv)
   // Print error usage.
   if (argc<2)
   {
-   printf("%s: Error: usage: usage must be one of:\n\
- %s base                To use base%s, base%s, and base%s\n\
- %s in.res base         To use in.res, base%s, and base%s\n\
- %s in.res b.blu c.h    To use in.res, b.blu and c.h\n",
+   printf("%s: Error: usage: usage must be one of:\n"
+" %s base                To use base%s, base%s, and base%s\n"
+" %s in.res base         To use in.res, base%s, and base%s\n"
+" %s in.res b.blu c.h    To use in.res, b.blu and c.h\n",
  MyName,MyName, RES_EXT,BLC_EXT, INF_EXT, MyName, BLC_EXT, INF_EXT,MyName);
    exit(1);
    }
@@ -227,8 +227,8 @@ main(int argc, char **argv)
    strcat(InName,RES_EXT);
   }
   /* If two or three arguments are given, the input name is the literal 
-  /* first argument.
-  */
+   * first argument.
+   */
   else {
         nameroot=argv[2];
         strcpy(InName,argv[1]);
@@ -273,13 +273,13 @@ main(int argc, char **argv)
   }
 
   // Print a comment header for the blorb file
-  getdate(&date);
-  fprintf(InfFile,"! Blorb Resource Definitions File\n\
-! Generated automatically by %s.\n\
-! Do not edit!\n
-! Include this file in your inform source with \"Include \"%s\";\"\n\n\
+  date = *localtime(NULL);
+  fprintf(InfFile,"! Blorb Resource Definitions File\n"
+"! Generated automatically by %s.\n"
+"! Do not edit!\n"
+"! Include this file in your inform source with \"Include \"%s\";\"\n\n\
 Message \"Including %s resource declarations generated on %d-%d-%d\";\n\n",
-  MyName, InfName,MyName,date.da_mon,date.da_day, date.da_year);
+  MyName, InfName,MyName,date.tm_mon,date.tm_mday, date.tm_year);
 
   // Fire up the lexer
   BEGIN START;
@@ -290,4 +290,5 @@ Message \"Including %s resource declarations generated on %d-%d-%d\";\n\n",
   fclose(InfFile);
   // And delete MyName
   free(MyName);
+  return 0;
 }
