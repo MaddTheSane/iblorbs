@@ -61,7 +61,7 @@ int main(int argc, char **argv)
  // Tell the user what we're doing
  printf("Running: %s\n",cmdbuf);
  // And do it.
- if (status=system(cmdbuf)) exit(status);
+ if ((status=system(cmdbuf))) exit(status);
 
  // Build the command line to inform
  strcpy(cmdbuf,Inform);
@@ -71,7 +71,7 @@ int main(int argc, char **argv)
  }
  // And run it
  printf("Running: %s\n",cmdbuf);
- if (status=system(cmdbuf)) exit(status);
+ if ((status=system(cmdbuf))) exit(status);
 
  /* Build the command line to blc (we do this now in case the user wanted
   * To put the compiled program in the blorb)

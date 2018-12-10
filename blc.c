@@ -247,8 +247,8 @@ void Write_Chunk(FILE *Out,struct Chunk *C)
 {
 int z=0;
 /* AIFF files are themselves chunks, so we just write their data, not
-/* their other info.
-*/
+ * their other info.
+ */
 if (strcmp(C->Type,"FORM")){
  write_id(Out,C->Type);
  write_int(Out,C->Length);
