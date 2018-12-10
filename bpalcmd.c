@@ -436,7 +436,7 @@ char *yytext;
 #define BOILER "%s: Blorb Palette Editor (%s)\nVersion %s by L. Ross Raszewski\n\
 Starting command interpreter...\ntype 'h' for command summary\n\n"
 static char *MyName;
-palette *working_palette;
+static palette *working_palette;
 static int verbose=1;
 static int message(const char *f, ...);
 static const char *Help="\

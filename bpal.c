@@ -123,8 +123,10 @@ int DeleteEntry(palette *p, int n)
  p->size--;
  return 1;
 }
-int colorcmp(const color *a, const color *b)
+static int colorcmp(const void *aa, const void *ba)
 {
+ const color *a = aa;
+ const color *b = ba;
  if (a->red==b->red)
   if (a->green==b->green)
    if (a->blue==b->blue)
