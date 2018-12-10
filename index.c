@@ -2,8 +2,8 @@
 #include <string.h>
 #include <stdlib.h>
 
-void write_int(FILE *f, unsigned int v)
-// Write_int writes an integer to a file in blorb format 
+//! Write_int writes an integer to a file in blorb format 
+static void write_int(FILE *f, unsigned int v)
 {
   unsigned char v1=v&0xFF,
     v2=(v>>8)&0xFF,
@@ -26,6 +26,7 @@ unsigned int read_int(unsigned char *from)
  l |= ((unsigned int) from[3]);
  return l;
 }
+
 unsigned int ReadChunk(FILE *from, void **to)
 // ReadChunk reads one entry from a blorb and loads a chunk from it
 {
@@ -43,7 +44,6 @@ unsigned int ReadChunk(FILE *from, void **to)
  fread(*to,l,1,from);
  return l;
 }
-
 
 int ReadRIdx(FILE *from, RIdx **arr)
 {
@@ -122,6 +122,7 @@ static void writeResources(RIdx *indx, int n, FILE *out)
   free(chunk);
  }
 }
+
 static void writeRIdx(FILE *out, RIdx *indx, int n)
 {
   int i;
@@ -136,6 +137,7 @@ static void writeRIdx(FILE *out, RIdx *indx, int n)
    write_int(out,indx[i].offset);
   }
 }
+
 void mergeFiles(FILE *f1, FILE *f2, FILE *out)
 {
  RIdx *ridx;

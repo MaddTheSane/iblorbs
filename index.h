@@ -1,7 +1,5 @@
 #include <stdio.h>
 
-//! Write_int writes an integer to a file in blorb format 
-extern void write_int(FILE *f, unsigned int v);
 extern unsigned int read_int(unsigned char *from);
 //! ReadChunk reads one entry from a blorb and loads a chunk from it
 extern unsigned int ReadChunk(FILE *from, void **to);
