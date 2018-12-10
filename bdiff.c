@@ -6,9 +6,9 @@
 #include "short.h"
 char Merge_Mode=0;
 /* The version and boilerplate messages.  The string is formatted
-/* with the assumption  that it will be printed with the program name,
-/* compile date, and version string
-*/
+ * with the assumption  that it will be printed with the program name,
+ * compile date, and version string
+ */
 #define VERSION ".1b"
 #define BOILER "%s: Blorb Diff (%s)\nVersion %s by L. Ross Raszewski\n"
 // Maximum number of chunks we'll allow
@@ -312,7 +312,7 @@ printf("Writing the other chunks...\n");
  fwrite("IFRS",1,4,out);
 }
 
-main(int argc, char **argv)
+int main(int argc, char **argv)
 {
  FILE *f1, *f2, *f3;
   MyName=ShortProgramName(argv[0]);
@@ -322,6 +322,7 @@ main(int argc, char **argv)
  f2=fopen(argv[2],"rb");
  f3=fopen(argv[3],"wb");
  mergeFiles(f1,f2,f3);
+ return 0;
 }
 
 

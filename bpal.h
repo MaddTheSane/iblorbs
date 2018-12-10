@@ -17,3 +17,4 @@ int SaveBlorbPalette(palette *p, char *f);
 int MergePalette(palette *dest, palette *src);
 palette *ReadPaletteFromFile(FILE *Pal, int s);
 void SortPalette(palette *p);
+int DeleteEntry(palette *p, int n);

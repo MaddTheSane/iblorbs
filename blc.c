@@ -1,7 +1,7 @@
 /* BLC: The Blorb Packager
-/* V .4b by L. Ross Raszewski
-/* Copyright 2000 by L. Ross Raszewski, but freely distributable.
-*/
+ * V .4b by L. Ross Raszewski
+ * Copyright 2000 by L. Ross Raszewski, but freely distributable.
+ */
 
 #include <stdio.h>
 #include <string.h>
@@ -30,9 +30,9 @@ void *my_malloc(int size)
    return buf;
 }
 /* The version and boilerplate messages.  The string is formatted
-/* with the assumption  that it will be printed with the program name,
-/* compile date, and version string
-*/
+ * with the assumption  that it will be printed with the program name,
+ * compile date, and version string
+ */
 #define VERSION ".4b"
 #define BOILER "%s: Blorb Packager (%s)\nVersion %s by L. Ross Raszewski\n"
 // Maximum number of chunks we'll allow
@@ -43,8 +43,8 @@ char *MyName;
 int Line=0;
 
 /* The blorb chunk types. In addition to the chunk data, it holds the index
-/* information if needed
-*/
+ * information if needed
+ */
 struct Chunk {
         char Type[5];
         char Use[5];
@@ -69,8 +69,8 @@ void write_int(FILE *f, unsigned int v)
 
 void str_long(char *f, unsigned int v)
 /* str_long writes a long to a string, in a format suitable to later
-/* using with write_id
-*/
+ * using with write_id
+ */
 {
   unsigned char v1=v&0xFF,
     v2=(v>>8)&0xFF,
@@ -84,8 +84,8 @@ void str_long(char *f, unsigned int v)
 }
 void str_short(char *f, unsigned int v)
 /* str_long writes a long to a string, in a format suitable to later
-/* using with write_id
-*/
+ * using with write_id
+ */
 {
   unsigned char v1=v&0xFF,
     v2=(v>>8)&0xFF;
@@ -96,8 +96,8 @@ void str_short(char *f, unsigned int v)
 
 void write_id(FILE *f, unsigned char *s)
 /* write_id writes a string to a file as a blorb ID string (4 bytes, space
-/* padded)
-*/
+ * padded)
+ */
 {
   int i;
   unsigned char sp=' ';
@@ -292,7 +292,7 @@ void WriteBlorb(FILE *F,FILE *Out)
  // Write that to the file
  write_int(Out,n);
 }
-main(int argc, char **argv)
+int main(int argc, char **argv)
 {
  FILE *in; 
  FILE *out;
@@ -336,4 +336,5 @@ main(int argc, char **argv)
  fclose(in);
  fclose(out);
  free(MyName);
+ return 0;
 }

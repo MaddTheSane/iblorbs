@@ -1,9 +1,9 @@
 %option caseless
 %{
 /* Front: The Inform-Blorb Frontend
-/* V .2b by L. Ross Raszewski
-/* Copyright 2000 by L. Ross Raszewski, but freely distributable.
-*/
+ * V .2b by L. Ross Raszewski
+ * Copyright 2000 by L. Ross Raszewski, but freely distributable.
+ */
 
 #include <stdio.h>
 #include <string.h>
@@ -25,7 +25,7 @@ char **setv;  // The variable to be set
 <GETL2>[^\n]+                   *setv=strdup(yytext);
 %%
 
-main(int argc, char **argv)
+int main(int argc, char **argv)
 {
  char cmdbuf[1024];
  int status;
@@ -74,8 +74,8 @@ main(int argc, char **argv)
  if (status=system(cmdbuf)) exit(status);
 
  /* Build the command line to blc (we do this now in case the user wanted
- /* To put the compiled program in the blorb)
- */
+  * To put the compiled program in the blorb)
+  */
  strcpy(cmdbuf,Blc);
  strcat(cmdbuf," ");
  strcat(cmdbuf,blc);
@@ -86,5 +86,6 @@ main(int argc, char **argv)
 
  // Ditch the blc control file.
  unlink(blc);
+ return 0;
 }
 

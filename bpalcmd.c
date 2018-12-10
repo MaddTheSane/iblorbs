@@ -813,7 +813,7 @@ verbose^=1; message("Full verbosity.\n");
 case 12:
 YY_RULE_SETUP
 #line 111 "bpalcmd.l"
-printf(Help);
+printf("%s", Help);
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
@@ -1731,9 +1731,9 @@ int message(const char *f, ...)
  else return vprintf(f,arg);
 }
 #ifndef LIBRARY_MODE
-main(int argc, char **argv)
+int main(int argc, char **argv)
 #else
-cmd_main(int argc, char **argv)
+int cmd_main(int argc, char **argv)
 #endif
 {
  MyName=ShortProgramName(argv[0]);
@@ -1742,5 +1742,6 @@ cmd_main(int argc, char **argv)
  working_palette->size=0;
  yylex();
  free(working_palette);
+ return 0;
 }
 

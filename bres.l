@@ -2,18 +2,18 @@
 %option yylineno
 %{
 /* Bres: The Blorb Resource Compiler
-/* V .3b by L. Ross Raszewski
-/* Copyright 2000 by L. Ross Raszewski, but freely distributable.
-*/
+ * V .3b by L. Ross Raszewski
+ * Copyright 2000 by L. Ross Raszewski, but freely distributable.
+ */
 
 #include <stdio.h>
 #include <string.h>
 #include <dos.h>
 #include "short.h"   // For ShortProgramName
 /* The version and boilerplate messages.  The string is formatted
-/* with the assumption  that it will be printed with the program name,
-/* compile date, and version string
-*/
+ * with the assumption  that it will be printed with the program name,
+ * compile date, and version string
+ */
 #define VERSION ".3b"
 #define BOILER "%s: Blorb Resource Compiler (%s)\nVersion %s by L. Ross Raszewski\n"
 
@@ -40,9 +40,9 @@ FILE *Blurb;
 FILE *InfFile;
 
 /* The name of the program -- on unix systems this should be identical to
-/* argv[0].  DJGPP rewrites argv[0] to the cannonical file name, so
-/* this is where we undo all that.
-*/
+ * argv[0].  DJGPP rewrites argv[0] to the cannonical file name, so
+ * this is where we undo all that.
+ */
 
 char *MyName;
 
