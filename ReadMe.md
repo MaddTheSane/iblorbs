@@ -63,18 +63,18 @@ iblorbs.zip contains source code for this system
   I know of no other tools for constructing blorb palettes.
   
 ### Survey of other blorbifiers:
-  * blorbtar, by Evin Roberts
+  * blorbtar, by Evin Roberts.
    blorbtar is a blorbifier that uses a **tar(1)**-like interface. Not being
    saddled with configuration files is generally helpful. If your
    concern is bundling a blorb for an already-written game, this is a very nice
    tool. It does not generate inform headers, and does require that users be
    conversant with tar syntax.
- * blurb, by Iain Merrick
+ * blurb, by Iain Merrick.
    blurb is a blorbifier similar in many respects to iblorb. It uses a blurb
    file for input, and does not call inform in the middle of blorb.  In
    most respects, blurb is indistinguishable from iblorb in terms of
    functionality.
- * perlblorb, by Graham Nelson
+ * perlblorb, by Graham Nelson.
    perlblorb is much like blurb. Its major limitation is that it was written
    in perl for an Acorn machine, and therefore requires some effort to
    get running on any other machine.
@@ -92,30 +92,30 @@ iblorbs.zip contains source code for this system
 
  You can also add other blorb resoruces to this file:
  
-* CODE File
+* *CODE File*.
   Tells the resource manager that you want to include the specified
   Z-Code or Glulx file in the blorb-file for this program (If the
   code is included in the blorb, you need only distribute one file
   for your users to get both the game itself and its picture/sound data,
   however, users without a blorb-capable interpreter will not be able to
   play the game)
-* COPYRIGHT Text
+* *COPYRIGHT Text*.
   The copyright information for the resource file
-* AUTHOR Text
+* *AUTHOR Text*.
   The name of the resource file's author
-* NOTE Text
+* *NOTE Text*.
   Any other information you want to include about the resources.
-* RELEASE Number
+* *RELEASE Number*.
   The release number of this blorb file
-* PALETTE file
+* *PALETTE file*.
   Include the pallette from the specified file, which is in blorb palette
   format.
-* RESOLUTION file
+* *RESOLUTION file*.
   Include the resolution table from the specified file, which is in blorb
   resolution format.
-* HIGHCOLOR
+* *HIGHCOLOR*.
   Include directions to use a 16-bit palette
-* TRUECOLOR
+* *TRUECOLOR*.
   include directions to use a 32-bit palette
 * You can also put comments in the file by startign a line with
   an exclamation point (`!`)
@@ -174,7 +174,7 @@ INFORM  infrmw32
 BRES    c:\inform\bres
 ````
 
-Will cause front to use "c:\inform\bres" for the resource compiler, and
+Will cause `front` to use "c:\inform\bres" for the resource compiler, and
 `infrmw32` as the inform compiler (you can also use this to make your
 favorite inform switches the default)
 
