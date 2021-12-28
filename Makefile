@@ -1,8 +1,8 @@
-CC := gcc
-LEX := flex
-LEX_LIB := -lfl
-CFLAGS :=
-LDFLAGS :=
+CC ?= gcc
+LEX ?= flex
+LEX_LIB ?= -lfl
+CFLAGS ?=
+LDFLAGS ?=
 FRONT = front
 BRES = bres
 BLC = blc
@@ -25,6 +25,8 @@ clean:
 	-rm bpal.o
 	-rm bpalcmd.o
 	-rm index.o
+	-rm bdiff.o
+	-rm bmerge.o
 veryclean: clean
 	-rm $(FRONT)
 	-rm $(BRES)
@@ -66,4 +68,4 @@ $(SRCARC): front.l bres.l blc.c short.c short.h bpal.c bpalcmd.c bpal.h makefile
 	-rm $(SRCARC)
 	zip $@ $^
 %.c: %.l
-	$(LEX) -o$@ $<
+	$(LEX) -o $@ $<
