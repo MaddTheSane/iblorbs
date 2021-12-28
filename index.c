@@ -5,15 +5,9 @@
 //! Write_int writes an integer to a file in blorb format 
 static void write_int(FILE *f, unsigned int v)
 {
-  unsigned char v1=v&0xFF,
-    v2=(v>>8)&0xFF,
-    v3=(v>>16)&0xFF,
-    v4=(v>>24)&0xFF;
+  unsigned char vv[4] = {(v>>24)&0xFF, (v>>16)&0xFF, (v>>8)&0xFF, v&0xFF};
   
-  fwrite(&v4,1,1,f);
-  fwrite(&v3,1,1,f);
-  fwrite(&v2,1,1,f);
-  fwrite(&v1,1,1,f);
+  fwrite(vv,1,4,f);
 }
 
 unsigned int read_int(unsigned char *from)
@@ -27,8 +21,8 @@ unsigned int read_int(unsigned char *from)
  return l;
 }
 
+//! ReadChunk reads one entry from a blorb and loads a chunk from it
 unsigned int ReadChunk(FILE *from, void **to)
-// ReadChunk reads one entry from a blorb and loads a chunk from it
 {
  unsigned int l;
  unsigned char v[4];
@@ -145,12 +139,12 @@ void mergeFiles(FILE *f1, FILE *f2, FILE *out)
  int n;
 
  n=BuildRIdx(f1,f2,&ridx,&indx);
-printf("Writing the resource chunks...\n");
+ printf("Writing the resource chunks...\n");
  writeResources(ridx,n,out);
-printf("Writing the RIdx chunk...\n");
+ printf("Writing the RIdx chunk...\n");
  writeRIdx(out,ridx,n);
  fseek(out,0,SEEK_END);
-printf("Writing the other chunks...\n");
+ printf("Writing the other chunks...\n");
  while(indx)
  {
   INdx *ii=indx;

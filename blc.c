@@ -7,6 +7,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include "short.h"
+
 #define BUF_SIZE 4096
 static void *my_realloc(void *buf, size_t size)
 {
@@ -53,24 +54,18 @@ struct Chunk {
         char *Data;
         };
 
+//! Write_int writes an integer to a file in blorb format 
 static void write_int(FILE *f, unsigned int v)
-// Write_int writes an integer to a file in blorb format 
 {
-  unsigned char v1=v&0xFF,
-    v2=(v>>8)&0xFF,
-    v3=(v>>16)&0xFF,
-    v4=(v>>24)&0xFF;
+  unsigned char vv[4] = {(v>>24)&0xFF, (v>>16)&0xFF, (v>>8)&0xFF, v&0xFF};
   
-  fwrite(&v4,1,1,f);
-  fwrite(&v3,1,1,f);
-  fwrite(&v2,1,1,f);
-  fwrite(&v1,1,1,f);
+  fwrite(vv,1,4,f);
 }
 
-static void str_long(char *f, unsigned int v)
-/* str_long writes a long to a string, in a format suitable to later
+/*! str_long writes a long to a string, in a format suitable to later
  * using with write_id
  */
+static void str_long(char *f, unsigned int v)
 {
   unsigned char v1=v&0xFF,
     v2=(v>>8)&0xFF,
@@ -82,10 +77,11 @@ static void str_long(char *f, unsigned int v)
   f[2]=v2;
   f[3]=v1;
 }
-static void str_short(char *f, unsigned int v)
-/* str_long writes a long to a string, in a format suitable to later
+
+/*! str_long writes a long to a string, in a format suitable to later
  * using with write_id
  */
+static void str_short(char *f, unsigned int v)
 {
   unsigned char v1=v&0xFF,
     v2=(v>>8)&0xFF;
@@ -94,10 +90,10 @@ static void str_short(char *f, unsigned int v)
   f[1]=v1;
 }
 
-static void write_id(FILE *f, unsigned char *s)
-/* write_id writes a string to a file as a blorb ID string (4 bytes, space
+/*! write_id writes a string to a file as a blorb ID string (4 bytes, space
  * padded)
  */
+static void write_id(FILE *f, unsigned char *s)
 {
   int i;
   unsigned char sp=' ';
@@ -108,8 +104,8 @@ static void write_id(FILE *f, unsigned char *s)
     fwrite(&sp, 1,1,f);
 }
 
+//! str_id writes a blorb identifier to a string
 static void str_id(char *f, unsigned char *s)
-// str_id writes a blorb identifier to a string
 {
   int i;
   unsigned char sp=' ';
@@ -122,8 +118,8 @@ static void str_id(char *f, unsigned char *s)
 
 
 
+//! ReadChunk reads one entry from a blc control file and loads a chunk from it
 static struct Chunk *ReadChunk(FILE *f)
-// ReadChunk reads one entry from a blc control file and loads a chunk from it
 {
  // Malloc ourselves a new chunk
  struct Chunk *N=(struct Chunk *)my_malloc(sizeof(struct Chunk));
@@ -194,17 +190,17 @@ static struct Chunk *ReadChunk(FILE *f)
   return N;
 }
 
-// Array of all chunks
+//! Array of all chunks
 static struct Chunk *Blorb[MAX_BLORB];
-// Number of chunks in this file
+//! Number of chunks in this file
 static int Chunks=1;
-// Number of chunks we need to index
+//! Number of chunks we need to index
 static int IndexEntries=0;
-// Offsets of index entries
+//! Offsets of index entries
 static unsigned long int *Index;
 
+//! BuildIndex builds the index chunk for a blorb file, loading all other chunks
 static void BuildIndex(FILE *f)
-// BuildIndex builds the index chunk for a blorb file, loading all other chunks
 {
  int i,n=0; char *dp;
  Blorb[0]=(struct Chunk *)my_malloc(sizeof(struct Chunk));
@@ -225,7 +221,7 @@ static void BuildIndex(FILE *f)
  // Write the length of the resource index chunk, and allocate its data space
  Blorb[0]->Length=(12*n)+4;
  Blorb[0]->Data=(char *)my_malloc(Blorb[0]->Length);
- Index=(long *)my_malloc(n*sizeof(unsigned long));
+ Index=(unsigned long *)my_malloc(n*sizeof(unsigned long));
  // The first thing in the data chunk is the number of entries
  str_long(Blorb[0]->Data,n);
  // Now, scroll through the chunks, noting each one in the index chunk
@@ -242,8 +238,8 @@ static void BuildIndex(FILE *f)
   }
 }
 
+//! Write_Chunk writes one chunk to a file
 static void Write_Chunk(FILE *Out,struct Chunk *C)
-// Write_Chunk writes one chunk to a file
 {
 int z=0;
 /* AIFF files are themselves chunks, so we just write their data, not
@@ -258,8 +254,8 @@ if (strcmp(C->Type,"FORM")){
  if (C->Length%2) fwrite(&z,1,1,Out);
 }
 
+//! WriteBlorb generates a blorb from a BLC file
 static void WriteBlorb(FILE *F,FILE *Out)
-// WriteBlorb generates a blorb from a BLC file
 {
  int n=0,i;
  // Write the IFF header
